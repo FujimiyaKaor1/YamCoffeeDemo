@@ -1,0 +1,89 @@
+<view class="container" wx:if="{{order}}">
+  <view class="status-section status-{{order.status}}">
+    <text class="status-text">{{order.statusText}}</text>
+    <text class="status-tip" wx:if="{{order.status === 0}}">请尽快完成支付</text>
+    <text class="status-tip" wx:if="{{order.status === 2}}">预计{{order.estimatedArrivalTime}}送达</text>
+  </view>
+
+  <view class="address-section">
+    <view class="address-icon">
+      <image src="/images/icons/location.png" mode="aspectFit"></image>
+    </view>
+    <view class="address-content">
+      <view class="address-header">
+        <text class="name">{{order.receiverName}}</text>
+        <text class="phone">{{order.receiverPhone}}</text>
+      </view>
+      <text class="address-text">{{order.fullAddress}}</text>
+    </view>
+  </view>
+
+  <view class="product-section">
+    <view class="section-header">
+      <text class="section-title">商品信息</text>
+    </view>
+    <view class="product-list">
+      <view class="product-item" wx:for="{{order.items}}" wx:key="id">
+        <image class="product-image" src="{{item.productImage}}" mode="aspectFill"></image>
+        <view class="product-info">
+          <text class="product-name">{{item.productName}}</text>
+          <view class="product-price-row">
+            <text class="product-price">¥{{item.productPrice}}</text>
+            <text class="product-quantity">x{{item.quantity}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-section">
+    <view class="info-row" bindtap="onCopyOrderNo">
+      <text class="info-label">订单编号</text>
+      <view class="info-value">
+        <text>{{order.orderNo}}</text>
+        <text class="copy-btn">复制</text>
+      </view>
+    </view>
+    <view class="info-row">
+      <text class="info-label">下单时间</text>
+      <text class="info-value">{{order.createTime}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.payTime}}">
+      <text class="info-label">支付时间</text>
+      <text class="info-value">{{order.payTime}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.deliveryTime}}">
+      <text class="info-label">发货时间</text>
+      <text class="info-value">{{order.deliveryTime}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.userNote}}">
+      <text class="info-label">订单备注</text>
+      <text class="info-value">{{order.userNote}}</text>
+    </view>
+  </view>
+
+  <view class="summary-section">
+    <view class="summary-row">
+      <text>商品金额</text>
+      <text>¥{{order.totalAmount}}</text>
+    </view>
+    <view class="summary-row">
+      <text>运费</text>
+      <text>¥{{order.freightAmount}}</text>
+    </view>
+    <view class="summary-row" wx:if="{{order.discountAmount > 0}}">
+      <text>优惠</text>
+      <text class="discount">-¥{{order.discountAmount}}</text>
+    </view>
+    <view class="summary-row total">
+      <text>实付金额</text>
+      <text class="total-price">¥{{order.payAmount}}</text>
+    </view>
+  </view>
+
+  <view class="footer-bar safe-area-bottom" wx:if="{{order.status === 0 || order.status === 2}}">
+    <view class="btn-cancel" wx:if="{{order.status === 0}}" bindtap="onCancelOrder">取消订单</view>
+    <view class="btn-primary" wx:if="{{order.status === 0}}" bindtap="onPay">去支付</view>
+    <view class="btn-primary" wx:if="{{order.status === 2}}" bindtap="onConfirmReceive">确认收货</view>
+  </view>
+</view>

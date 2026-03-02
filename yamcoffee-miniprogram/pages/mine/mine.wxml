@@ -1,0 +1,69 @@
+<view class="container">
+  <view class="user-section">
+    <view class="user-info" wx:if="{{isLoggedIn}}">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/common/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="user-text">
+        <text class="nickname">{{userInfo.nickname || '微信用户'}}</text>
+        <text class="phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</text>
+      </view>
+    </view>
+    <view class="user-info" wx:else bindtap="onLoginTap">
+      <image class="avatar" src="/images/common/default-avatar.png" mode="aspectFill"></image>
+      <view class="user-text">
+        <text class="nickname">点击登录</text>
+        <text class="phone">登录后享受更多服务</text>
+      </view>
+      <image class="arrow" src="/images/icons/arrow-right.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <view class="order-section">
+    <view class="section-header">
+      <text class="section-title">我的订单</text>
+      <view class="section-more" bindtap="onOrderTap">
+        <text>全部订单</text>
+        <image class="arrow-small" src="/images/icons/arrow-right.png" mode="aspectFit"></image>
+      </view>
+    </view>
+    <view class="order-tabs">
+      <view class="order-tab" bindtap="onOrderTap" data-status="0">
+        <view class="tab-icon-wrapper">
+          <image class="tab-icon" src="/images/icons/order-pay.png" mode="aspectFit"></image>
+          <view class="badge" wx:if="{{orderCount.pendingPayment > 0}}">{{orderCount.pendingPayment}}</view>
+        </view>
+        <text class="tab-text">待付款</text>
+      </view>
+      <view class="order-tab" bindtap="onOrderTap" data-status="1">
+        <view class="tab-icon-wrapper">
+          <image class="tab-icon" src="/images/icons/order-ship.png" mode="aspectFit"></image>
+          <view class="badge" wx:if="{{orderCount.pendingShipment > 0}}">{{orderCount.pendingShipment}}</view>
+        </view>
+        <text class="tab-text">待发货</text>
+      </view>
+      <view class="order-tab" bindtap="onOrderTap" data-status="2">
+        <view class="tab-icon-wrapper">
+          <image class="tab-icon" src="/images/icons/order-receive.png" mode="aspectFit"></image>
+          <view class="badge" wx:if="{{orderCount.pendingReceipt > 0}}">{{orderCount.pendingReceipt}}</view>
+        </view>
+        <text class="tab-text">待收货</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="menu-section">
+    <view class="menu-item" bindtap="onAddressTap">
+      <image class="menu-icon" src="/images/icons/address.png" mode="aspectFit"></image>
+      <text class="menu-text">收货地址</text>
+      <image class="arrow" src="/images/icons/arrow-right.png" mode="aspectFit"></image>
+    </view>
+    <view class="menu-item" bindtap="onFavoriteTap">
+      <image class="menu-icon" src="/images/icons/favorite.png" mode="aspectFit"></image>
+      <text class="menu-text">我的收藏</text>
+      <image class="arrow" src="/images/icons/arrow-right.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <view class="logout-section" wx:if="{{isLoggedIn}}">
+    <view class="logout-btn" bindtap="onLogoutTap">退出登录</view>
+  </view>
+</view>

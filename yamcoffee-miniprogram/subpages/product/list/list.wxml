@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="product-grid" wx:if="{{products.length > 0}}">
+    <view class="product-card" wx:for="{{products}}" wx:key="id"
+          bindtap="onProductTap" data-product="{{item}}">
+      <image class="product-image" src="{{item.mainImage}}" mode="aspectFill"></image>
+      <view class="product-info">
+        <text class="product-name">{{item.name}}</text>
+        <text class="product-subtitle">{{item.subtitle}}</text>
+        <view class="product-price-row">
+          <text class="product-price">¥{{item.price}}</text>
+          <text class="product-sales">已售{{item.sales}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && products.length === 0}}">
+    <image src="/images/common/empty-product.png" mode="aspectFit"></image>
+    <text>暂无商品</text>
+  </view>
+
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  
+  <view class="no-more" wx:if="{{!hasMore && products.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+</view>

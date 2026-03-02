@@ -1,0 +1,70 @@
+<view class="container">
+  <view class="header">
+    <view class="search-bar" bindtap="onSearchTap">
+      <image class="search-icon" src="/images/icons/search.png" mode="aspectFit"></image>
+      <text class="search-placeholder">搜索商品</text>
+    </view>
+    <view class="cart-icon" bindtap="onCartTap">
+      <image src="/images/icons/cart.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <swiper class="banner-swiper" indicator-dots autoplay circular>
+    <swiper-item wx:for="{{banners}}" wx:key="id" bindtap="onBannerTap" data-banner="{{item}}">
+      <image class="banner-image" src="{{item.image}}" mode="aspectFill"></image>
+    </swiper-item>
+  </swiper>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">商品分类</text>
+    </view>
+    <view class="category-grid">
+      <view class="category-item" wx:for="{{categories}}" wx:key="id" 
+            bindtap="onCategoryTap" data-category="{{item}}">
+        <image class="category-icon" src="{{item.icon}}" mode="aspectFit"></image>
+        <text class="category-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{hotProducts.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">热销商品</text>
+      <text class="section-more" bindtap="onSearchTap">更多</text>
+    </view>
+    <scroll-view class="product-scroll" scroll-x>
+      <view class="product-item" wx:for="{{hotProducts}}" wx:key="id"
+            bindtap="onProductTap" data-product="{{item}}">
+        <image class="product-image" src="{{item.mainImage}}" mode="aspectFill"></image>
+        <view class="product-info">
+          <text class="product-name">{{item.name}}</text>
+          <view class="product-price-row">
+            <text class="product-price">¥{{item.price}}</text>
+            <text class="product-original-price" wx:if="{{item.originalPrice}}">¥{{item.originalPrice}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="section" wx:if="{{recommendProducts.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">为你推荐</text>
+    </view>
+    <view class="product-grid">
+      <view class="product-card" wx:for="{{recommendProducts}}" wx:key="id"
+            bindtap="onProductTap" data-product="{{item}}">
+        <image class="product-card-image" src="{{item.mainImage}}" mode="aspectFill"></image>
+        <view class="product-card-info">
+          <text class="product-card-name">{{item.name}}</text>
+          <text class="product-card-subtitle">{{item.subtitle}}</text>
+          <view class="product-card-price-row">
+            <text class="product-card-price">¥{{item.price}}</text>
+            <text class="product-card-sales">已售{{item.sales}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

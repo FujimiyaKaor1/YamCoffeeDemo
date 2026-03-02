@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="logo-section">
+    <image class="logo" src="/images/common/logo.png" mode="aspectFit"></image>
+    <text class="app-name">YamCoffee</text>
+    <text class="slogan">麻山药咖啡 · 健康生活</text>
+  </view>
+
+  <view class="login-section">
+    <button class="btn-login" bindtap="onLogin" loading="{{loading}}" disabled="{{loading}}">
+      <image class="wechat-icon" src="/images/icons/wechat.png" mode="aspectFit"></image>
+      <text>微信一键登录</text>
+    </button>
+    <text class="login-tip">登录后可享受更多服务</text>
+  </view>
+
+  <view class="agreement">
+    <text>登录即代表同意</text>
+    <text class="link">《用户协议》</text>
+    <text>和</text>
+    <text class="link">《隐私政策》</text>
+  </view>
+</view>

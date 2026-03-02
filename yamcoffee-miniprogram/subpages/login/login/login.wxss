@@ -1,0 +1,79 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFF3E0 0%, #ffffff 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 48rpx;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 200rpx;
+}
+
+.logo {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.app-name {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #FF6D00;
+  margin-top: 24rpx;
+}
+
+.slogan {
+  font-size: 26rpx;
+  color: #999999;
+  margin-top: 12rpx;
+}
+
+.login-section {
+  width: 100%;
+  margin-top: 120rpx;
+}
+
+.btn-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #07C160;
+  color: #ffffff;
+  font-size: 32rpx;
+  padding: 28rpx;
+  border-radius: 48rpx;
+  border: none;
+}
+
+.btn-login::after {
+  border: none;
+}
+
+.wechat-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 16rpx;
+}
+
+.login-tip {
+  display: block;
+  text-align: center;
+  font-size: 24rpx;
+  color: #999999;
+  margin-top: 24rpx;
+}
+
+.agreement {
+  position: fixed;
+  bottom: 60rpx;
+  font-size: 22rpx;
+  color: #999999;
+}
+
+.agreement .link {
+  color: #FF6D00;
+}

@@ -1,0 +1,187 @@
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+}
+
+.tabs {
+  display: flex;
+  background-color: #ffffff;
+  padding: 0 24rpx;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #666666;
+  position: relative;
+}
+
+.tab-item.active {
+  color: #FF6D00;
+  font-weight: 500;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background-color: #FF6D00;
+  border-radius: 2rpx;
+}
+
+.order-list {
+  padding: 24rpx;
+}
+
+.order-card {
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 24rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.order-no {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.order-status {
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.status-0 {
+  color: #FF6D00;
+}
+
+.status-1 {
+  color: #2196F3;
+}
+
+.status-2 {
+  color: #4CAF50;
+}
+
+.status-3 {
+  color: #999999;
+}
+
+.status-4 {
+  color: #999999;
+}
+
+.order-items {
+  padding: 20rpx 24rpx;
+}
+
+.order-item {
+  display: flex;
+  margin-bottom: 16rpx;
+}
+
+.order-item:last-child {
+  margin-bottom: 0;
+}
+
+.item-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+}
+
+.item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item-name {
+  font-size: 28rpx;
+  color: #333333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-price {
+  font-size: 26rpx;
+  color: #333333;
+}
+
+.item-quantity {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 24rpx;
+  border-top: 1rpx solid #F5F5F5;
+}
+
+.order-total {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.total-price {
+  margin-left: 20rpx;
+}
+
+.total-price .price {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #FF6D00;
+}
+
+.order-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.btn-cancel {
+  padding: 12rpx 24rpx;
+  font-size: 24rpx;
+  color: #666666;
+  border: 1rpx solid #E5E5E5;
+  border-radius: 32rpx;
+}
+
+.btn-primary {
+  padding: 12rpx 24rpx;
+  font-size: 24rpx;
+  color: #ffffff;
+  background-color: #FF6D00;
+  border-radius: 32rpx;
+}
+
+.empty-state {
+  padding-top: 200rpx;
+}

@@ -1,0 +1,94 @@
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+}
+
+.form-section {
+  background-color: #ffffff;
+  margin: 24rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+  align-items: flex-start;
+}
+
+.label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.textarea {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+  min-height: 120rpx;
+}
+
+.picker {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.picker text {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.picker text.placeholder {
+  color: #999999;
+}
+
+.arrow {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.default-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  margin: 24rpx;
+  padding: 24rpx;
+  border-radius: 16rpx;
+}
+
+.default-section .label {
+  width: auto;
+}
+
+.submit-section {
+  padding: 48rpx 24rpx;
+}
+
+.btn-submit {
+  background-color: #FF6D00;
+  color: #ffffff;
+  font-size: 32rpx;
+  padding: 28rpx;
+  border-radius: 48rpx;
+  border: none;
+}
+
+.btn-submit::after {
+  border: none;
+}

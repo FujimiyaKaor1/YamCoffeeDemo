@@ -1,0 +1,46 @@
+<view class="container">
+  <view class="cart-list" wx:if="{{cartList.length > 0}}">
+    <view class="cart-item" wx:for="{{cartList}}" wx:key="id">
+      <view class="checkbox" bindtap="onSelectItem" data-id="{{item.id}}">
+        <view class="checkbox-inner {{item.selected ? 'checked' : ''}}"></view>
+      </view>
+      <image class="product-image" src="{{item.productImage}}" mode="aspectFill" bindtap="onProductTap" data-id="{{item.productId}}"></image>
+      <view class="product-info">
+        <text class="product-name" bindtap="onProductTap" data-id="{{item.productId}}">{{item.productName}}</text>
+        <view class="price-row">
+          <text class="product-price">¥{{item.productPrice}}</text>
+        </view>
+        <view class="quantity-row">
+          <view class="quantity-control">
+            <view class="btn-minus {{item.quantity <= 1 ? 'disabled' : ''}}" bindtap="onQuantityChange" data-id="{{item.id}}" data-type="minus">-</view>
+            <text class="quantity-text">{{item.quantity}}</text>
+            <view class="btn-plus {{item.quantity >= item.stock ? 'disabled' : ''}}" bindtap="onQuantityChange" data-id="{{item.id}}" data-type="plus">+</view>
+          </view>
+          <view class="btn-delete" catchtap="onDeleteItem" data-id="{{item.id}}">删除</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && cartList.length === 0}}">
+    <image src="/images/common/empty-cart.png" mode="aspectFit"></image>
+    <text>购物车是空的</text>
+    <view class="btn-go-shopping" bindtap="wx.switchTab" data-url="/pages/index/index">去逛逛</view>
+  </view>
+
+  <view class="footer-bar safe-area-bottom" wx:if="{{cartList.length > 0}}">
+    <view class="select-all" bindtap="onSelectAll">
+      <view class="checkbox">
+        <view class="checkbox-inner {{isAllSelected ? 'checked' : ''}}"></view>
+      </view>
+      <text>全选</text>
+    </view>
+    <view class="checkout-info">
+      <text class="total-label">合计:</text>
+      <text class="total-price">¥{{totalPrice}}</text>
+    </view>
+    <view class="btn-checkout {{selectedCount > 0 ? '' : 'disabled'}}" bindtap="onCheckout">
+      结算({{selectedCount}})
+    </view>
+  </view>
+</view>

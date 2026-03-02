@@ -1,0 +1,50 @@
+<view class="container" wx:if="{{product}}">
+  <swiper class="product-swiper" indicator-dots circular>
+    <swiper-item>
+      <image class="product-image" src="{{product.mainImage}}" mode="aspectFill"></image>
+    </swiper-item>
+  </swiper>
+
+  <view class="product-info">
+    <view class="price-row">
+      <text class="price">¥{{product.price}}</text>
+      <text class="original-price" wx:if="{{product.originalPrice}}">¥{{product.originalPrice}}</text>
+    </view>
+    <text class="product-name">{{product.name}}</text>
+    <text class="product-subtitle">{{product.subtitle}}</text>
+    <view class="product-tags">
+      <text class="tag hot" wx:if="{{product.isHot}}">热销</text>
+      <text class="tag new" wx:if="{{product.isNew}}">新品</text>
+    </view>
+    <view class="product-meta">
+      <text>销量: {{product.sales}}</text>
+      <text>库存: {{product.stock}}</text>
+    </view>
+  </view>
+
+  <view class="quantity-section">
+    <text class="section-label">购买数量</text>
+    <view class="quantity-control">
+      <view class="btn-minus {{quantity <= 1 ? 'disabled' : ''}}" bindtap="onQuantityChange" data-type="minus">-</view>
+      <input class="quantity-input" type="number" value="{{quantity}}" bindinput="onInputQuantity" />
+      <view class="btn-plus {{quantity >= product.stock ? 'disabled' : ''}}" bindtap="onQuantityChange" data-type="plus">+</view>
+    </view>
+  </view>
+
+  <view class="footer-bar safe-area-bottom">
+    <view class="action-icons">
+      <view class="action-icon" bindtap="onToggleFavorite">
+        <image src="{{isFavorite ? '/images/icons/favorite-active.png' : '/images/icons/favorite.png'}}" mode="aspectFit"></image>
+        <text>{{isFavorite ? '已收藏' : '收藏'}}</text>
+      </view>
+    </view>
+    <view class="action-buttons">
+      <view class="btn-cart" bindtap="onAddToCart">加入购物车</view>
+      <view class="btn-buy" bindtap="onBuyNow">立即购买</view>
+    </view>
+  </view>
+</view>
+
+<view class="loading-container" wx:if="{{loading}}">
+  <text>加载中...</text>
+</view>
