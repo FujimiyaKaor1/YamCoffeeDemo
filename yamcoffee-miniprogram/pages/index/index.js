@@ -91,18 +91,5 @@ Page({
     wx.navigateTo({
       url: '/subpages/product/list/list'
     })
-  },
-
-  onCartTap() {
-    const app = getApp()
-    if (app.isLoggedIn()) {
-      wx.navigateTo({
-        url: '/subpages/cart/cart/cart'
-      })
-    } else {
-      wx.navigateTo({
-        url: '/subpages/login/login'
-      })
-    }
   }
 })

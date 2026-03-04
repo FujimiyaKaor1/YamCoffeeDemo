@@ -39,8 +39,7 @@
       </view>
     </view>
     <view class="action-buttons">
-      <view class="btn-cart" bindtap="onAddToCart">加入购物车</view>
-      <view class="btn-buy" bindtap="onBuyNow">立即购买</view>
+      <view class="btn-buy-full" bindtap="onBuyNow">立即购买</view>
     </view>
   </view>
 </view>

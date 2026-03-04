@@ -76,22 +76,6 @@ Page({
     } catch (e) {}
   },
 
-  async onAddToCart() {
-    const app = getApp()
-    if (!app.isLoggedIn()) {
-      wx.navigateTo({ url: '/subpages/login/login' })
-      return
-    }
-    
-    try {
-      await api.post('/cart', {
-        productId: this.data.product.id,
-        quantity: this.data.quantity
-      })
-      util.showToast('已加入购物车')
-    } catch (e) {}
-  },
-
   async onBuyNow() {
     const app = getApp()
     if (!app.isLoggedIn()) {
@@ -99,15 +83,8 @@ Page({
       return
     }
     
-    try {
-      const cartData = await api.post('/cart', {
-        productId: this.data.product.id,
-        quantity: this.data.quantity
-      })
-      
-      wx.navigateTo({
-        url: `/subpages/order/create/create?cartItemIds=${cartData.id}`
-      })
-    } catch (e) {}
+    wx.navigateTo({
+      url: `/subpages/order/create/create?productId=${this.data.product.id}&quantity=${this.data.quantity}`
+    })
   }
 })

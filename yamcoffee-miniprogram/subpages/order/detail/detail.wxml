@@ -81,9 +81,10 @@
     </view>
   </view>
 
-  <view class="footer-bar safe-area-bottom" wx:if="{{order.status === 0 || order.status === 2}}">
+  <view class="footer-bar safe-area-bottom" wx:if="{{order.status === 0 || order.status === 2 || order.status === 5}}">
     <view class="btn-cancel" wx:if="{{order.status === 0}}" bindtap="onCancelOrder">取消订单</view>
     <view class="btn-primary" wx:if="{{order.status === 0}}" bindtap="onPay">去支付</view>
     <view class="btn-primary" wx:if="{{order.status === 2}}" bindtap="onConfirmReceive">确认收货</view>
+    <view class="btn-confirm-payment" wx:if="{{order.status === 5}}" bindtap="onConfirmReceiptPayment">确认收款并安排配送</view>
   </view>
 </view>

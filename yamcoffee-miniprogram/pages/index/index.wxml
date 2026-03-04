@@ -4,9 +4,6 @@
       <image class="search-icon" src="/images/icons/search.png" mode="aspectFit"></image>
       <text class="search-placeholder">搜索商品</text>
     </view>
-    <view class="cart-icon" bindtap="onCartTap">
-      <image src="/images/icons/cart.png" mode="aspectFit"></image>
-    </view>
   </view>
 
   <swiper class="banner-swiper" indicator-dots autoplay circular>

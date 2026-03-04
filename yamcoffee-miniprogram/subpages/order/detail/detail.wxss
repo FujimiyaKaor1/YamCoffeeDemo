@@ -220,3 +220,11 @@
   background-color: #FF6D00;
   border-radius: 40rpx;
 }
+
+.btn-confirm-payment {
+  padding: 16rpx 32rpx;
+  font-size: 28rpx;
+  color: #ffffff;
+  background-color: #FF9800;
+  border-radius: 40rpx;
+}

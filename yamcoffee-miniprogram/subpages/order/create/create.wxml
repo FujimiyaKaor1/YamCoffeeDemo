@@ -13,17 +13,16 @@
     <image class="arrow" src="/images/icons/arrow-right.png" mode="aspectFit"></image>
   </view>
 
-  <view class="product-section">
-    <view class="section-title">商品清单</view>
-    <view class="product-list">
-      <view class="product-item" wx:for="{{cartItems}}" wx:key="id">
-        <image class="product-image" src="{{item.productImage}}" mode="aspectFill"></image>
-        <view class="product-info">
-          <text class="product-name">{{item.productName}}</text>
-          <view class="product-price-row">
-            <text class="product-price">¥{{item.productPrice}}</text>
-            <text class="product-quantity">x{{item.quantity}}</text>
-          </view>
+  <view class="product-section" wx:if="{{product}}">
+    <view class="section-title">商品信息</view>
+    <view class="product-item">
+      <image class="product-image" src="{{product.mainImage}}" mode="aspectFill"></image>
+      <view class="product-info">
+        <text class="product-name">{{product.name}}</text>
+        <text class="product-subtitle">{{product.subtitle}}</text>
+        <view class="product-price-row">
+          <text class="product-price">¥{{product.price}}</text>
+          <text class="product-quantity">x{{quantity}}</text>
         </view>
       </view>
     </view>
@@ -59,4 +58,13 @@
       {{submitting ? '提交中...' : '提交订单'}}
     </view>
   </view>
+
+  <payment-modal 
+    visible="{{showPaymentModal}}"
+    orderNo="{{paymentInfo.orderNo}}"
+    amount="{{paymentInfo.amount}}"
+    qrCodeUrl="{{paymentInfo.qrCodeUrl}}"
+    bind:close="onPaymentModalClose"
+    bind:confirmpay="onConfirmPay"
+  />
 </view>

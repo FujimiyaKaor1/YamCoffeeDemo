@@ -1,0 +1,45 @@
+<view class="modal-mask" wx:if="{{visible}}" bindtap="onClose">
+  <view class="modal-container" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">订单支付</text>
+      <view class="close-btn" bindtap="onClose">
+        <text class="close-icon">×</text>
+      </view>
+    </view>
+
+    <view class="modal-body">
+      <view class="qrcode-wrapper">
+        <image class="qrcode-image" src="{{qrCodeUrl}}" mode="aspectFit"></image>
+      </view>
+
+      <view class="amount-wrapper">
+        <text class="amount-label">支付金额</text>
+        <text class="amount-value">¥{{amount}}</text>
+      </view>
+
+      <view class="order-info">
+        <text class="order-label">订单编号：</text>
+        <text class="order-no">{{orderNo}}</text>
+      </view>
+
+      <view class="status-wrapper">
+        <text class="status-text status-pending" wx:if="{{payStatus === 'pending'}}">待支付</text>
+        <text class="status-text status-paid-pending" wx:if="{{payStatus === 'paid_pending'}}">已支付待确认</text>
+        <text class="status-text status-success" wx:if="{{payStatus === 'success'}}">支付成功</text>
+      </view>
+
+      <view class="guide-text">
+        <text>请使用微信/支付宝扫描二维码完成支付</text>
+      </view>
+
+      <view class="error-wrapper" wx:if="{{networkError}}">
+        <text class="error-text">网络连接失败，请检查网络后重试</text>
+      </view>
+    </view>
+
+    <view class="modal-footer">
+      <button class="confirm-btn" bindtap="onConfirmPay" wx:if="{{payStatus === 'pending'}}">我已支付</button>
+      <button class="refresh-btn" bindtap="onRefreshStatus" wx:if="{{payStatus === 'paid_pending'}}">刷新状态</button>
+    </view>
+  </view>
+</view>

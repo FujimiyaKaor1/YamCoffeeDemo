@@ -60,6 +60,19 @@ public class ProductService {
         return convertToVO(product);
     }
     
+    public Product getProductEntityById(Long id) {
+        return productMapper.selectById(id);
+    }
+    
+    public void decreaseStock(Long productId, Integer quantity) {
+        Product product = productMapper.selectById(productId);
+        if (product != null && product.getStock() >= quantity) {
+            product.setStock(product.getStock() - quantity);
+            product.setSales(product.getSales() + quantity);
+            productMapper.updateById(product);
+        }
+    }
+    
     public List<ProductVO> getRecommendProducts() {
         LambdaQueryWrapper<Product> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Product::getStatus, 1)

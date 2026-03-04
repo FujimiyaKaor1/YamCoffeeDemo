@@ -3,19 +3,29 @@ const util = require('../../../utils/util')
 
 Page({
   data: {
-    cartItemIds: [],
-    cartItems: [],
+    productId: null,
+    quantity: 1,
+    product: null,
     selectedAddress: null,
     userNote: '',
     totalPrice: 0,
     loading: true,
-    submitting: false
+    submitting: false,
+    showPaymentModal: false,
+    paymentInfo: {
+      orderNo: '',
+      amount: 0,
+      qrCodeUrl: ''
+    },
+    paymentTimeout: null
   },
 
   onLoad(options) {
-    if (options.cartItemIds) {
-      const cartItemIds = options.cartItemIds.split(',').map(id => parseInt(id))
-      this.setData({ cartItemIds })
+    if (options.productId) {
+      this.setData({ 
+        productId: parseInt(options.productId),
+        quantity: parseInt(options.quantity) || 1
+      })
     }
   },
 
@@ -25,21 +35,15 @@ Page({
 
   async loadData() {
     try {
-      const [cartItems, addresses] = await Promise.all([
-        api.get('/cart/list'),
-        api.get('/address/list')
-      ])
+      const addresses = await api.get('/address/list')
       
-      const selectedItems = cartItems.filter(item => 
-        this.data.cartItemIds.includes(item.id) || this.data.cartItemIds.length === 0
-      )
-      
+      let product = null
       let totalPrice = 0
-      selectedItems.forEach(item => {
-        if (item.selected) {
-          totalPrice += parseFloat(item.subtotal)
-        }
-      })
+      
+      if (this.data.productId) {
+        product = await api.get(`/product/${this.data.productId}`)
+        totalPrice = parseFloat(product.price) * this.data.quantity
+      }
       
       let defaultAddress = null
       if (addresses && addresses.length > 0) {
@@ -47,13 +51,14 @@ Page({
       }
       
       this.setData({
-        cartItems: selectedItems.filter(item => item.selected),
-        selectedAddress: defaultAddress,
+        product,
         totalPrice,
+        selectedAddress: defaultAddress,
         loading: false
       })
     } catch (e) {
       this.setData({ loading: false })
+      util.showToast('网络连接失败，请稍后重试')
     }
   },
 
@@ -75,8 +80,8 @@ Page({
       return
     }
     
-    if (this.data.cartItems.length === 0) {
-      util.showToast('请选择商品')
+    if (!this.data.product) {
+      util.showToast('商品信息错误')
       return
     }
     
@@ -84,24 +89,111 @@ Page({
     util.showLoading('提交中...')
     
     try {
-      const cartItemIds = this.data.cartItems.map(item => item.id)
-      const data = await api.post('/order', {
+      const data = await api.post('/order/direct', {
         addressId: this.data.selectedAddress.id,
-        cartItemIds,
+        productId: this.data.productId,
+        quantity: this.data.quantity,
         userNote: this.data.userNote
       })
       
       util.hideLoading()
-      util.showToast('下单成功')
+      
+      const paymentData = await this.getPaymentQrCode(data.orderNo, this.data.totalPrice)
+      if (paymentData) {
+        this.setData({
+          showPaymentModal: true,
+          paymentInfo: {
+            orderNo: data.orderNo,
+            amount: this.data.totalPrice,
+            qrCodeUrl: paymentData.qrCodeUrl || ''
+          }
+        })
+        this.startPaymentTimeout()
+      } else {
+        util.showToast('下单成功')
+        setTimeout(() => {
+          wx.redirectTo({
+            url: `/subpages/order/detail/detail?orderNo=${data.orderNo}`
+          })
+        }, 1000)
+      }
+    } catch (e) {
+      util.hideLoading()
+      this.setData({ submitting: false })
+      util.showToast('下单失败，请检查网络后重试')
+    }
+  },
+
+  async getPaymentQrCode(orderNo, amount) {
+    try {
+      const data = await api.get('/payment/qrcode')
+      return data
+    } catch (e) {
+      return null
+    }
+  },
+
+  onPaymentModalClose() {
+    this.clearPaymentTimeout()
+    this.setData({
+      showPaymentModal: false,
+      submitting: false
+    })
+    wx.redirectTo({
+      url: '/pages/order/order'
+    })
+  },
+
+  startPaymentTimeout() {
+    this.clearPaymentTimeout()
+    const timeout = setTimeout(() => {
+      util.showToast('支付超时，请重新下单')
+      this.setData({
+        showPaymentModal: false,
+        submitting: false
+      })
+      setTimeout(() => {
+        wx.redirectTo({
+          url: '/pages/order/order'
+        })
+      }, 1500)
+    }, 5 * 60 * 1000)
+    this.setData({ paymentTimeout: timeout })
+  },
+
+  clearPaymentTimeout() {
+    if (this.data.paymentTimeout) {
+      clearTimeout(this.data.paymentTimeout)
+      this.setData({ paymentTimeout: null })
+    }
+  },
+
+  onUnload() {
+    this.clearPaymentTimeout()
+  },
+
+  async onConfirmPay() {
+    const orderNo = this.data.paymentInfo.orderNo
+    try {
+      util.showLoading('确认中...')
+      await api.put(`/order/${orderNo}/confirm-pay`)
+      util.hideLoading()
+      util.showToast('已确认支付')
+      this.clearPaymentTimeout()
+      
+      this.setData({
+        showPaymentModal: false,
+        submitting: false
+      })
       
       setTimeout(() => {
         wx.redirectTo({
-          url: `/subpages/order/detail/detail?orderNo=${data.orderNo}`
+          url: `/subpages/order/detail/detail?orderNo=${orderNo}`
         })
       }, 1000)
     } catch (e) {
       util.hideLoading()
-      this.setData({ submitting: false })
+      util.showToast('确认支付失败，请稍后重试')
     }
   }
 })

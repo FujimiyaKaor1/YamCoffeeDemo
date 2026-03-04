@@ -70,6 +70,8 @@ public class OrderDetailVO {
                 return "已完成";
             case 4:
                 return "已取消";
+            case 5:
+                return "已支付待确认";
             default:
                 return "未知状态";
         }

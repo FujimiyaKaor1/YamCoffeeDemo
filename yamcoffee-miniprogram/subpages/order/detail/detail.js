@@ -69,5 +69,22 @@ Page({
         util.showToast('已复制订单号')
       }
     })
+  },
+
+  async onConfirmReceiptPayment() {
+    const confirmed = await util.showConfirm('确认已收到付款并安排配送？')
+    
+    if (confirmed) {
+      try {
+        util.showLoading('确认中...')
+        await api.put(`/order/${this.data.orderNo}/confirm-receipt-payment`)
+        util.hideLoading()
+        util.showToast('确认成功')
+        this.loadOrder(this.data.orderNo)
+      } catch (e) {
+        util.hideLoading()
+        util.showToast('确认收款失败，请稍后重试')
+      }
+    }
   }
 })

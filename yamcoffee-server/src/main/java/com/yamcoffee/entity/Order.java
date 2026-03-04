@@ -61,6 +61,12 @@ public class Order implements Serializable {
     @TableField("pay_time")
     private LocalDateTime payTime;
     
+    @TableField("user_pay_time")
+    private LocalDateTime userPayTime;
+    
+    @TableField("confirm_pay_time")
+    private LocalDateTime confirmPayTime;
+    
     @TableField("delivery_type")
     private Integer deliveryType;
     

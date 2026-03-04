@@ -19,6 +19,7 @@ public class Constants {
     public static final Integer ORDER_STATUS_PENDING_RECEIPT = 2;
     public static final Integer ORDER_STATUS_COMPLETED = 3;
     public static final Integer ORDER_STATUS_CANCELLED = 4;
+    public static final Integer ORDER_STATUS_PAID_PENDING = 5;
     
     public static final Integer PAY_STATUS_UNPAID = 0;
     public static final Integer PAY_STATUS_PAID = 1;
